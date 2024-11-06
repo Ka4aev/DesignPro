@@ -4,7 +4,7 @@
   {% if user.is_authenticated %}
     <h1>Вы уже авторизованны</h1>
   {% else %}
-    <form class="form-register" method="post">
+    <form class="form" method="post">
       {% csrf_token %}
       <div>
           <p>{{ form.username.label_tag }}</p>
@@ -14,7 +14,7 @@
           <p>{{ form.password }}</p>
         </div>
       </div>
-      <button class="button-change" type="submit">Вход</button>
+      <button class="form__button" type="submit">Вход</button>
       <input type="hidden" name="next" value="{{ next }}">
     </form>
   {% endif %}
