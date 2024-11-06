@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Главная страница {% endblock %}</title>
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <h1><a class="header__logo" href="{% url 'catalog:index' %}">Главная</a></h1>
+    </header>
+    <main class="main">
+        <div>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </main>
+</body>
+</html>
