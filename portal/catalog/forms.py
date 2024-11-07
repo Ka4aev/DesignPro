@@ -3,6 +3,9 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator
 from .models import User
 
+def validate_ru_email(value):
+    if not value.endswith('.ru'):
+        raise ValidationError('Email должен заканчиваться на .ru')
 
 class RegisterForm(forms.ModelForm):
     first_name = forms.CharField(
@@ -48,7 +51,10 @@ class RegisterForm(forms.ModelForm):
     email = forms.EmailField(
         label="Почта",
         max_length=254,
-        validators=[EmailValidator(message="Введите действительный email-адрес.")]
+        validators=[
+            EmailValidator(message="Введите действительный email-адрес."),
+            validate_ru_email
+        ]
     )
     password = forms.CharField(
         label="Пароль",

@@ -10,12 +10,10 @@
     <header class="header">
         <h1><a class="header__logo" href="{% url 'catalog:index' %}">Главная</a></h1>
         <nav class="header__nav">
-            {% if user.is_authenticated %}
 
-            {% else %}
                 <a class="header__link" href="{% url 'catalog:register' %}">Регистрация</a>
                 <a class="header__link" href="{% url 'catalog:login' %}">Вход</a>
-            {% endif %}
+
         </nav>
     </header>
     <main class="main">
