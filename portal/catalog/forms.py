@@ -1,21 +1,37 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from .models import User
-
-from django import forms
-from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator
 from .models import User
 
 
 class RegisterForm(forms.ModelForm):
-    fio = forms.CharField(
-        label="ФИО",
+    first_name = forms.CharField(
+        label="Имя",
         max_length=254,
         validators=[
             RegexValidator(
                 regex=r'^[А-Яа-яЁё -]+$',
-                message="ФИО должно содержать только кириллические буквы, дефисы и пробелы."
+                message="Имя должно содержать только кириллические буквы, дефисы и пробелы."
+            )
+        ]
+    )
+    last_name = forms.CharField(
+        label="Фамилия",
+        max_length=254,
+        validators=[
+            RegexValidator(
+                regex=r'^[А-Яа-яЁё -]+$',
+                message="Фамилия должна содержать только кириллические буквы, дефисы и пробелы."
+            )
+        ]
+    )
+    patronymic = forms.CharField(
+        label="Отчество",
+        max_length=254,
+        validators=[
+            RegexValidator(
+                regex=r'^[А-Яа-яЁё -]+$',
+                message="Отчество должно содержать только кириллические буквы, дефисы и пробелы."
             )
         ]
     )
@@ -54,6 +70,12 @@ class RegisterForm(forms.ModelForm):
             raise ValidationError("Логин уже занят.")
         return username
 
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("Почта уже занята.")
+        return email
+
     def clean(self):
         super().clean()
 
@@ -73,4 +95,4 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("fio", "username", "email")
+        fields = ("last_name","first_name","patronymic", "username", "email")
