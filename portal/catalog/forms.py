@@ -10,7 +10,7 @@ class RegisterForm(forms.ModelForm):
         max_length=254,
         validators=[
             RegexValidator(
-                regex=r'^[А-Яа-яЁё -]+$',
+                regex=r'^[А-яЁё -]+$',
                 message="Имя должно содержать только кириллические буквы, дефисы и пробелы."
             )
         ]
@@ -20,7 +20,7 @@ class RegisterForm(forms.ModelForm):
         max_length=254,
         validators=[
             RegexValidator(
-                regex=r'^[А-Яа-яЁё -]+$',
+                regex=r'^[А-яЁё -]+$',
                 message="Фамилия должна содержать только кириллические буквы, дефисы и пробелы."
             )
         ]
@@ -30,7 +30,7 @@ class RegisterForm(forms.ModelForm):
         max_length=254,
         validators=[
             RegexValidator(
-                regex=r'^[А-Яа-яЁё -]+$',
+                regex=r'^[А-яЁё -]+$',
                 message="Отчество должно содержать только кириллические буквы, дефисы и пробелы."
             )
         ]

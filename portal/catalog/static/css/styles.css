@@ -17,7 +17,7 @@ main{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #afe3f8;
+    background: #0098d1;
 }
 .header__logo{
     color:#fff;
