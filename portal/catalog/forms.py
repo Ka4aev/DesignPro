@@ -122,3 +122,4 @@ class ApplicationForm(forms.ModelForm):
             'category': forms.Select(attrs={'class': 'form-control'}),
             'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
         }
+

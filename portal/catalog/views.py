@@ -30,19 +30,17 @@ def check_username(request):
 def index(request):
     status_filter = request.GET.get('status', '')
 
-    if status_filter:
-        applications = Application.objects.filter(status=status_filter).order_by('-created_at')
-    else:
-        applications = Application.objects.all().order_by('-created_at')
+    num_applications = Application.objects.filter(status='a').count()
+
+    applications = Application.objects.filter(status='s').order_by('-created_at')[:3]
 
     context = {
         'applications': applications,
-        'status_filter': status_filter,  # Передаем статус для использования в шаблоне
+        'status_filter': status_filter,
+        'num_applications': num_applications,
     }
 
     return render(request, 'catalog/index.html', context)
-
-
 
 
 class Register(generic.CreateView):

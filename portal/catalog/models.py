@@ -20,19 +20,21 @@ class User(AbstractUser):
         return f"{self.last_name} {self.first_name} {self.patronymic}"
 
 
-# Проверка на тип и размер загружаемого изображения
 def validate_image(image):
-    # Проверка MIME type файла
+    # Проверка MIME типа файла
     valid_mime_types = ['image/jpeg', 'image/png', 'image/bmp']
-    mime_type = image.file.content_type
-    if mime_type not in valid_mime_types:
-        raise ValidationError("Формат файла должен быть: jpg, jpeg, png, bmp.")
+    mime_type = getattr(image.file, 'content_type', None)
+    if mime_type:
+        if mime_type not in valid_mime_types:
+            raise ValidationError("Формат файла должен быть: jpg, jpeg, png, bmp.", code='invalid_mime_type')
+    else:
+        raise ValidationError("Не удалось определить формат файла.", code='unknown_mime_type')
 
     # Проверка размера файла
     file_size = image.size
     limit_mb = 2
     if file_size > limit_mb * 1024 * 1024:
-        raise ValidationError("Размер файла не должен превышать 2 МБ.")
+        raise ValidationError("Размер файла не должен превышать 2 МБ.", code='file_too_large')
 
 
 class Category(models.Model):
@@ -49,6 +51,7 @@ class Application(models.Model):
         related_name='applications',
         verbose_name="Пользователь"
     )
+
     title = models.CharField(max_length=200, verbose_name="Напишите заголовок к заявке")
     description = models.TextField(verbose_name="Напишите к заявке описание")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Выберите категорию заявки")
