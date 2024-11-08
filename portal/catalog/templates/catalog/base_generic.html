@@ -15,8 +15,8 @@
         <nav class="header__nav">
             {% if user.is_authenticated %}
                 <a class="header__link" href="{% url 'catalog:create_application' %}">Создать заявку</a>
+                <a class="header__link-bg" href="{% url 'catalog:profile' %}">Профиль</a>
                 <a class="header__link-bg" href="{% url 'catalog:logout' %}">Выход</a>
-                <a class="header__link-bg" href="{% url 'catalog:profile' user.id %}">Профиль</a>
             {% else %}
                 <a class="header__link" href="{% url 'catalog:register' %}">Регистрация</a>
                 <a class="header__link" href="{% url 'catalog:login' %}">Вход</a>

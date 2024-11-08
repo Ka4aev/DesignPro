@@ -4,6 +4,9 @@
 
 button{cursor: pointer;}
 a,a:visited{text-decoration: none !important;}
+a{
+    transition: all 0.3s ease-in-out;
+}
 
 body{
     font-family: 'Roboto Mono',sans-serif;
