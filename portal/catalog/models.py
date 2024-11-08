@@ -53,7 +53,6 @@ class Application(models.Model):
     description = models.TextField(verbose_name="Напишите к заявке описание")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Выберите категорию заявки")
     image = models.ImageField(upload_to='application', validators=[validate_image], verbose_name="Загрузите фото заявки")
-
     LOAN_STATUS = (
         ('n', 'Новая'),
         ('a', 'Принято в работу'),
