@@ -2,6 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, EmailValidator
 from .models import User
+from .models import Application
 
 def validate_ru_email(value):
     if not value.endswith('.ru'):
@@ -102,3 +103,22 @@ class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ("last_name","first_name","patronymic", "username", "email")
+
+
+
+class ApplicationForm(forms.ModelForm):
+    class Meta:
+        model = Application
+        fields = ['title', 'description', 'category', 'image']
+        labels = {
+            'title': 'Заголовок заявки',
+            'description': 'Описание заявки',
+            'category': 'Категория',
+            'image': 'Фото заявки',
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите заголовок'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Введите описание'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+        }

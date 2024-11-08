@@ -57,7 +57,7 @@ ROOT_URLCONF = 'portal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'portal/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,6 +114,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -128,4 +130,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'catalog.User'
 
-LOGIN_REDIRECT_URL = 'catalog:index'
+LOGIN_REDIRECT_URL = 'catalog:profile'
+LOGOUT_REDIRECT_URL = '/'

@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
+from django.core.exceptions import ValidationError
+from django.conf import settings
+
 # Create your models here.
 
 class User(AbstractUser):
@@ -13,4 +17,59 @@ class User(AbstractUser):
     USERNAME_FIELD = 'username'
 
     def __str__(self):
-        return self.fio
+        return f"{self.last_name} {self.first_name} {self.patronymic}"
+
+
+# Проверка на тип и размер загружаемого изображения
+def validate_image(image):
+    # Проверка MIME type файла
+    valid_mime_types = ['image/jpeg', 'image/png', 'image/bmp']
+    mime_type = image.file.content_type
+    if mime_type not in valid_mime_types:
+        raise ValidationError("Формат файла должен быть: jpg, jpeg, png, bmp.")
+
+    # Проверка размера файла
+    file_size = image.size
+    limit_mb = 2
+    if file_size > limit_mb * 1024 * 1024:
+        raise ValidationError("Размер файла не должен превышать 2 МБ.")
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=200, help_text="Выберите название категории")
+
+    def __str__(self):
+        return self.name
+
+
+class Application(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='applications',
+        verbose_name="Пользователь"
+    )
+    title = models.CharField(max_length=200, verbose_name="Напишите заголовок к заявке")
+    description = models.TextField(verbose_name="Напишите к заявке описание")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Выберите категорию заявки")
+    image = models.ImageField(upload_to='application', validators=[validate_image], verbose_name="Загрузите фото заявки")
+
+    LOAN_STATUS = (
+        ('n', 'Новая'),
+        ('a', 'Принято в работу'),
+        ('s', 'Выполнено'),
+    )
+    status = models.CharField(max_length=1, choices=LOAN_STATUS, default='n', verbose_name='Статус заявки',help_text='Статус заявки')
+    created_at = models.DateTimeField(auto_now_add=True, help_text="Дата и время создания заявки")
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('application-detail', args=[str(self.id)])
+
+    def display_category(self):
+        return self.category.name if self.category else "Без категории"
+    display_category.short_description = 'Category'
+
+

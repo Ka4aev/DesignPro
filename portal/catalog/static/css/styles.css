@@ -3,7 +3,7 @@
 *{padding: 0;margin: 0;border: 0;box-sizing: border-box;}
 
 button{cursor: pointer;}
-a,a:visited{text-decoration: none}
+a,a:visited{text-decoration: none !important;}
 
 body{
     font-family: 'Roboto Mono',sans-serif;
@@ -25,6 +25,7 @@ main{
 .header__nav{
     display: flex;
     gap: 30px;
+    align-items: center;
 }
 .header__link{
     padding: 10px;
@@ -36,6 +37,10 @@ main{
 .header__link:hover{
     background: #5ea4ff;
     transform: scale(1.05);
+}
+.header__link-bg{
+    background: transparent;
+    color: white;
 }
 .form{
     margin: 0 auto;
@@ -89,4 +94,12 @@ main{
     display: flex;
     margin: 0 auto;
     font-size: 20px;
+}
+.application{
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 35px;
+}
+
+.application:hover{
+    transform: translateY(20px);
 }

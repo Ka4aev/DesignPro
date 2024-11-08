@@ -2,18 +2,35 @@
 {% load static %}
 {% block content %}
 
+
 <div class="container my-5">
-    <h2 class="text-center mb-4">Добро пожаловать в Internet Portal!</h2>
 
-    <h3 class="text-center mb-5">Список заявок</h3>
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-primary text-white text-center py-4">
+            <h2>Профиль пользователя</h2>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <h4>{{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}</h4>
+                    <p class="text-muted"><strong>Почта:</strong> {{ user.email }}</p>
+                    <p><strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="application-grid row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+    <h3 class="text-center mb-4">Мои заявки</h3>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for application in applications %}
-        <div class="col application">
-            <div class=" card h-100 shadow-sm">
-                <img src="{{ application.image.url }}" class="card-img-top" alt="{{ application.title }}" style="height: 200px; object-fit: cover;">
+        <div class="col">
+            <div class="application card h-100 shadow-sm border-0">
+                <img src="{{ application.image.url }}" class="card-img-top rounded-top" alt="{{ application.title }}" style="height: 200px; object-fit: cover;">
+
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">{{ application.title }}</h5>
+                    <h5 class="card-title text-primary">{{ application.title }}</h5>
                     <p class="card-text text-muted">{{ application.description|truncatewords:20 }}</p>
                     <p class="card-text"><strong>Категория:</strong> {{ application.display_category }}</p>
 
@@ -21,7 +38,7 @@
                         <p class="mb-2">
                             <strong>Статус:</strong>
                             {% if application.status == 'n' %}
-                                <span class="badge bg-primary text-white" >Новая</span>
+                                <span class="badge bg-primary">Новая</span>
                             {% elif application.status == 'a' %}
                                 <span class="badge bg-warning text-dark">Принято в работу</span>
                             {% elif application.status == 's' %}
@@ -35,7 +52,7 @@
         </div>
         {% empty %}
         <div class="col-12">
-            <p class="text-center">Заявок нет.</p>
+            <p class="text-center">У вас пока нет заявок.</p>
         </div>
         {% endfor %}
     </div>
