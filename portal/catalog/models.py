@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 from django.conf import settings
-
+from PIL import Image
 # Create your models here.
 
 class User(AbstractUser):
@@ -36,6 +36,23 @@ def validate_image(image):
     if file_size > limit_mb * 1024 * 1024:
         raise ValidationError("Размер файла не должен превышать 2 МБ.", code='file_too_large')
 
+    # Проверка разрешения изображения
+    try:
+
+        img = Image.open(image)
+        img.verify()  # Проверка целостности изображения
+
+        width, height = img.size
+        max_resolution = 2000
+        if width > max_resolution or height > max_resolution:
+            raise ValidationError(
+                f"Разрешение изображения не должно превышать {max_resolution}px по ширине или высоте.",
+                code='resolution_too_large'
+            )
+    except Image.UnidentifiedImageError:
+        raise ValidationError("Загруженный файл не является поддерживаемым изображением.", code='invalid_image')
+    except Exception as e:
+        raise ValidationError(f"Ошибка при обработке изображения: {e}", code='processing_error')
 
 class Category(models.Model):
     name = models.CharField(max_length=200, help_text="Выберите название категории")
@@ -55,7 +72,11 @@ class Application(models.Model):
     title = models.CharField(max_length=200, verbose_name="Напишите заголовок к заявке")
     description = models.TextField(verbose_name="Напишите к заявке описание")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Выберите категорию заявки")
-    image = models.ImageField(upload_to='application', validators=[validate_image], verbose_name="Загрузите фото заявки")
+    image = models.FileField(
+        upload_to='application',
+        validators=[validate_image],
+        verbose_name="Загрузите фото заявки"
+    )
     LOAN_STATUS = (
         ('n', 'Новая'),
         ('a', 'Принято в работу'),
