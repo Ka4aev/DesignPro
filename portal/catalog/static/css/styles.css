@@ -3,7 +3,10 @@
 *{padding: 0;margin: 0;border: 0;box-sizing: border-box;}
 
 button{cursor: pointer;}
-a,a:visited{text-decoration: none;}
+a,a:visited{text-decoration: none !important;}
+a{
+    transition: all 0.3s ease-in-out;
+}
 
 body{
     font-family: 'Roboto Mono',sans-serif;
@@ -17,8 +20,89 @@ main{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #cceaf8;
+    background: #0098d1;
 }
 .header__logo{
-    color: inherit;
+    color:#fff;
+}
+.header__nav{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+.header__link{
+    padding: 10px;
+    background: #5ec6ff;
+    color: #fff;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+.header__link:hover{
+    background: #5ea4ff;
+    transform: scale(1.05);
+}
+.header__link-bg{
+    background: transparent;
+    color: white;
+}
+.form{
+    margin: 0 auto;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 20px 10px;
+    background: #9ec6ff;
+    border-radius: 5px;
+    gap: 30px;
+
+    p{
+        display: flex;
+        align-self: center;
+        flex-direction: column;
+        width: 60%;
+    }
+
+    label{
+        font-size: 20px;
+    }
+    input{
+        padding:7px;
+        font-size: 15px;
+    }
+    .form__button{
+        align-self: center;
+        padding: 10px;
+        width: 300px;
+        background: #fff;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+        border-radius: 5px;
+    }
+    .form__button:hover{
+       background: #377dff;
+        color: #fff;
+    }
+
+}
+.form p:last-child{
+    display: flex;
+    flex-direction: row;
+}
+
+.errorlist{
+    margin-left: 10%;
+    color: #8a0000;
+}
+#username-error{
+    display: flex;
+    margin: 0 auto;
+    font-size: 20px;
+}
+.application{
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 35px;
+}
+
+.application:hover{
+    transform: translateY(20px);
 }
