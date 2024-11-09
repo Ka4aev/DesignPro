@@ -82,6 +82,11 @@ class Application(models.Model):
         null=True,
         verbose_name="Изображение дизайна"
     )
+    comment = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Комментарий"
+    )
     LOAN_STATUS = (
         ('n', 'Новая'),
         ('a', 'Принято в работу'),
