@@ -32,7 +32,9 @@
             </div>
         </div>
     </div>
+    {% if user.is_staff %}
 
+    {% else %}
      <form method="get" class="mb-4">
         <label for="status" class="form-label">Фильтр по статусу:</label>
         <select id="status" name="status" class="form-select" onchange="this.form.submit()">
@@ -83,6 +85,7 @@
         </div>
         {% endfor %}
     </div>
+    {% endif %}
 </div>
 
 {% endblock %}

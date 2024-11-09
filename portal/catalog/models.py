@@ -38,7 +38,6 @@ def validate_image(image):
 
     # Проверка разрешения изображения
     try:
-
         img = Image.open(image)
         img.verify()  # Проверка целостности изображения
 
@@ -76,6 +75,12 @@ class Application(models.Model):
         upload_to='application',
         validators=[validate_image],
         verbose_name="Загрузите фото заявки"
+    )
+    design_image = models.ImageField(
+        upload_to='admin',
+        blank=True,
+        null=True,
+        verbose_name="Изображение дизайна"
     )
     LOAN_STATUS = (
         ('n', 'Новая'),
