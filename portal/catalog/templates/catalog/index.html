@@ -4,8 +4,8 @@
 
 <div class="container my-5">
     <h2 class="text-center mb-4">Добро пожаловать в Internet Portal!</h2>
-
     <h3 class="text-center mb-5">Список заявок</h3>
+    <h4 class='last-category'>Последняя добавленная категория:     <strong class="last-category__span">   {{ last_category.name }}</strong></h4>
     <h5 class="mb-4">Заявок с статусом "Принято в работу": <b>{{ num_applications }}</b></h5>
 
     <div class="application-grid row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">

@@ -38,7 +38,6 @@ def validate_image(image):
 
     # Проверка разрешения изображения
     try:
-
         img = Image.open(image)
         img.verify()  # Проверка целостности изображения
 
@@ -55,7 +54,7 @@ def validate_image(image):
         raise ValidationError(f"Ошибка при обработке изображения: {e}", code='processing_error')
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, help_text="Выберите название категории")
+    name = models.CharField(max_length=200, help_text="Выберите название категории",unique=True)
 
     def __str__(self):
         return self.name
@@ -76,6 +75,17 @@ class Application(models.Model):
         upload_to='application',
         validators=[validate_image],
         verbose_name="Загрузите фото заявки"
+    )
+    design_image = models.ImageField(
+        upload_to='admin',
+        blank=True,
+        null=True,
+        verbose_name="Изображение дизайна"
+    )
+    comment = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name="Комментарий"
     )
     LOAN_STATUS = (
         ('n', 'Новая'),

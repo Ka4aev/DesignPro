@@ -8,7 +8,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Application
+from .models import Application, Category
 from .forms import ApplicationForm
 from django.contrib.auth.decorators import login_required
 
@@ -31,13 +31,14 @@ def index(request):
     status_filter = request.GET.get('status', '')
 
     num_applications = Application.objects.filter(status='a').count()
-
+    last_category = Category.objects.order_by('-id').first()
     applications = Application.objects.filter(status='s').order_by('-created_at')[:3]
 
     context = {
         'applications': applications,
         'status_filter': status_filter,
         'num_applications': num_applications,
+        'last_category': last_category,
     }
 
     return render(request, 'catalog/index.html', context)
