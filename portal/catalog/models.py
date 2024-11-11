@@ -54,7 +54,7 @@ def validate_image(image):
         raise ValidationError(f"Ошибка при обработке изображения: {e}", code='processing_error')
 
 class Category(models.Model):
-    name = models.CharField(max_length=200, help_text="Выберите название категории")
+    name = models.CharField(max_length=200, help_text="Выберите название категории",unique=True)
 
     def __str__(self):
         return self.name
